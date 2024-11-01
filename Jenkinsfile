@@ -24,7 +24,7 @@ pipeline{
         }
         stage('Build') {
             steps {
-                sh 'curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -'
+                sh 'curl -sL https://deb.nodesource.com/setup_16.x | -E bash -'
                 sh 'apt-get install -y nodejs'
             }
         }
