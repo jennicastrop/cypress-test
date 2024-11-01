@@ -1,5 +1,14 @@
 pipeline{
     agent any
+
+    parameters {
+        string(name: 'SPEC', defaultValue: "cypress/e2e/1-getting-started/**", description: "Enter the scripts path that you want to execute")
+        choice(name: "BROWSER", choices: ['chrome', 'firefox'], description: "Choice the browser to execute the scripts")
+    }
+
+    options{
+        ansiColor('xterm')
+    }
     
     stages{
         stage('Clone') {
@@ -10,11 +19,10 @@ pipeline{
             }
         }
         stage('Testing'){
-            sh "npm i"
-            sh "npx cypress run --browser ${BROWSER} --spec ${SPEC}"
-        }
-        stage('Deploy'){
-            echo "Deploying the app..."
+            steps{
+                sh "npm i"
+                sh "npx cypress run --browser ${BROWSER} --spec ${SPEC}"
+            }
         }
     }
 }
