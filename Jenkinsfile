@@ -14,6 +14,12 @@ pipeline{
                 }
             }
         }
+        stage('Build') {
+            steps {
+                sh 'curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -'
+                sh 'sudo apt-get install -y nodejs'
+            }
+        }
         stage('Testing'){
             steps{
                 sh "npm i"
