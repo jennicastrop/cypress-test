@@ -9,8 +9,16 @@ pipeline{
     stages{
         stage('Clone') {
             steps {
-                withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
-                    sh 'git clone https://$GITHUB_TOKEN@github.com/jennicastrop/cypress-test.git'
+                script {
+                    def repoDir = 'cypress-test'
+                    if (fileExists(repoDir)) {
+                        echo "Deleting existing repo directory: ${repoDir}"
+                        sh "rm -rf ${repoDir}"
+                    }
+                    
+                    withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
+                        sh "git clone https://${GITHUB_TOKEN}@github.com/jennicastrop/cypress-test.git ${repoDir}"
+                    }
                 }
             }
         }
