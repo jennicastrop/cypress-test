@@ -38,10 +38,17 @@ pipeline{
             }
         }
     }
-
-    post{
-        always{
-            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'cypress/report', reportFiles: 'indes.html', reportName: 'HTML report', reportTitles: ''])
+    post {
+        always {
+            publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: false,
+                keepAll: true,
+                reportDir: 'cypress/report',
+                reportFiles: 'index.html',  // Corrected the file name
+                reportName: 'HTML report',
+                reportTitles: ''
+            ])
         }
     }
 }
