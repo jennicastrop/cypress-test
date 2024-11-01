@@ -1,5 +1,10 @@
 pipeline{
-    agent any
+    agent {
+        docker {
+            image 'node:16' 
+            args '-u root' 
+        }
+    }
 
     parameters {
         string(name: 'SPEC', defaultValue: "cypress/e2e/1-getting-started/**", description: "Enter the scripts path that you want to execute")
@@ -22,16 +27,18 @@ pipeline{
                 }
             }
         }
-        stage('Build') {
+        stage('Install Dependencies') {
             steps {
-                sh 'curl -sL https://deb.nodesource.com/setup_16.x | bash -'
-                sh 'apt-get install -y nodejs'
+                dir('cypress-test') {
+                    sh 'npm install'
+                }
             }
         }
         stage('Testing'){
             steps{
-                sh "npm i"
-                sh "npx cypress run --browser ${BROWSER} --spec ${SPEC}"
+                dir('cypress-test') {
+                    sh "npx cypress run --browser ${BROWSER} --spec ${SPEC}"
+                }
             }
         }
     }
