@@ -1,13 +1,13 @@
 pepeline{
     agent any
-
-    withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
-        sh 'git clone https://$GITHUB_TOKEN@github.com/jennicastrop/cypress-test.git'
-    }
     
     stages{
-        stage('Build'){
-            echo "Building the app..."
+        stage('Clone') {
+            steps {
+                withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
+                    sh 'git clone https://$GITHUB_TOKEN@github.com/jennicastrop/cypress-test.git'
+                }
+            }
         }
         stage('Testing'){
             sh "npm i"
