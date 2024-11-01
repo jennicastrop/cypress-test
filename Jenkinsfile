@@ -1,5 +1,9 @@
 pepeline{
     agent any
+
+    withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
+        sh 'git clone https://$GITHUB_TOKEN@github.com/jennicastrop/cypress-test.git'
+    }
     
     stages{
         stage('Build'){
