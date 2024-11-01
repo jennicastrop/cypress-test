@@ -1,10 +1,5 @@
 pipeline{
-    agent {
-        docker {
-            image 'node:16' 
-            args '-u root' 
-        }
-    }
+    agent any
 
     parameters {
         string(name: 'SPEC', defaultValue: "cypress/e2e/1-getting-started/**", description: "Enter the scripts path that you want to execute")
