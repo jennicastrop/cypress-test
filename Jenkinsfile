@@ -26,6 +26,7 @@ pipeline{
             steps {
                 dir('cypress-test') {
                     sh 'npm install'
+                    sh "npm install --no-color"
                 }
             }
         }
@@ -35,6 +36,12 @@ pipeline{
                     sh "npx cypress run --browser ${BROWSER} --spec ${SPEC}"
                 }
             }
+        }
+    }
+
+    post{
+        always{
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'cypress/report', reportFiles: 'indes.html', reportName: 'HTML report', reportTitles: ''])
         }
     }
 }
